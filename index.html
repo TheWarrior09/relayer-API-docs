@@ -348,6 +348,9 @@
                   <li>
                     <a href="#server-time" class="toc-h2 toc-link" data-title="Server Time">Server Time</a>
                   </li>
+                  <li>
+                    <a href="#transaction-hash" class="toc-h2 toc-link" data-title="Transaction Hash">Transaction Hash</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -360,7 +363,10 @@
                     <a href="#submit-trade-order-zkos" class="toc-h2 toc-link" data-title="Submit Trade Order Zkos">Submit Trade Order Zkos</a>
                   </li>
                   <li>
-                    <a href="#submit-bulk-order" class="toc-h2 toc-link" data-title="Submit Bulk Order">Submit Bulk Order</a>
+                    <a href="#settle-lend-order" class="toc-h2 toc-link" data-title="Settle Lend Order">Settle Lend Order</a>
+                  </li>
+                  <li>
+                    <a href="#settle-trade-order" class="toc-h2 toc-link" data-title="Settle Trade Order">Settle Trade Order</a>
                   </li>
                   <li>
                     <a href="#open-order" class="toc-h2 toc-link" data-title="Open Order">Open Order</a>
@@ -397,6 +403,26 @@
                   </li>
                   <li>
                     <a href="#unrealized-pnl-all" class="toc-h2 toc-link" data-title="Unrealized Pnl All">Unrealized Pnl All</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#websocket-api" class="toc-h1 toc-link" data-title="Websocket API">Websocket API</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#subscribe-live-price-data" class="toc-h2 toc-link" data-title="Subscribe Live Price Data">Subscribe Live Price Data</a>
+                  </li>
+                  <li>
+                    <a href="#subscribe-order-book" class="toc-h2 toc-link" data-title="Subscribe Order Book">Subscribe Order Book</a>
+                  </li>
+                  <li>
+                    <a href="#subscribe-candle-data" class="toc-h2 toc-link" data-title="Subscribe Candle Data">Subscribe Candle Data</a>
+                  </li>
+                  <li>
+                    <a href="#subscribe-recent-trades" class="toc-h2 toc-link" data-title="Subscribe Recent Trades">Subscribe Recent Trades</a>
+                  </li>
+                  <li>
+                    <a href="#subscribe-heartbeat" class="toc-h2 toc-link" data-title="Subscribe Heartbeat">Subscribe Heartbeat</a>
                   </li>
               </ul>
           </li>
@@ -1001,6 +1027,81 @@ You must add <code>api_key</code> and <code>api_secret</code> in your private AP
 <p><code>server_time</code></p>
 <h3 id='message-parameters-9'>Message Parameters</h3>
 <p><code>null</code></p>
+<h2 id='transaction-hash'>Transaction Hash</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Content-Type</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">application/json</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">raw</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+  <span class="na">jsonrpc</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2.0</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">transaction_hashes</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">id</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
+  <span class="na">params</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">AccountId</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">id</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0c3eb16783ccdbee855e0babf6d130101e7d66089bac20484606e52bf507d90e3a5049a3379b8afc47068d2508dfd71fe92adab7a5ad682fbbbb9b401158e62d42aa64cb22</span><span class="dl">"</span><span class="p">,</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">POST</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">myHeaders</span><span class="p">,</span>
+  <span class="na">body</span><span class="p">:</span> <span class="nx">raw</span><span class="p">,</span>
+  <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://rpc.twilight.rest/api</span><span class="dl">"</span><span class="p">,</span> <span class="nx">requestOptions</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">));</span>
+</code></pre></div>
+<blockquote>
+<p>The result from the above endpoint looks like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0c3eb16783ccdbee855e0babf6d130101e7d66089bac20484606e52bf507d90e3a5049a3379b8afc47068d2508dfd71fe92adab7a5ad682fbbbb9b401158e62d42aa64cb22"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"datetime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1708363831398559"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"83216790-d1c6-40d9-a70e-712d5d81cecd"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"order_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FILLED"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MARKET"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"output"</span><span class="p">:</span><span class="w"> </span><span class="s2">"01000000010000002a000000000000003138363065656636336564656531303738313738623361646236336539663836393231636161313662358a00000000000000306333656231363738336363646265653835356530626162663664313330313031653764363630383962616332303438343630366535326266353037643930653361353034396133333739623861666334373036386432353038646664373166653932616461623761356164363832666262626239623430313135386536326434326161363463623232010000000000000082000000000000000000000000000000671ca31e9c9274ef4cf068098060878c960afaa5d7c2a205d3cd3f38f858e00f0104000000000000000300000001000000386567000000000000000000000000000000000000000000000000000000000002000000010000000000000001000000000000000000000000000000671ca31e9c9274ef4cf068098060878c960afaa5d7c2a205d3cd3f38f858e00f03000000010000009ccb0000000000000000000000000000000000000000000000000000000000000300000001000000010000000000000000000000000000000000000000000000000000000000000001000000"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tx_hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8E291447D61EBC7E0AF5BB006576190E117516CA9A29358554C108718586FF58"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0c3eb16783ccdbee855e0babf6d130101e7d66089bac20484606e52bf507d90e3a5049a3379b8afc47068d2508dfd71fe92adab7a5ad682fbbbb9b401158e62d42aa64cb22"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"datetime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1708411999147047"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"83216790-d1c6-40d9-a70e-712d5d81cecd"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"order_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SETTLED"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MARKET"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"output"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tx_hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C5680F08C4D315241924BB1B4F172B12ABB44A6A49DA0CBAD69552D43A9EBA4A"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>Transaction Hash</p>
+<h3 id='http-method-11'>HTTP Method</h3>
+<p><code>POST</code></p>
+<h3 id='rpc-method-10'>RPC Method</h3>
+<p><code>transaction_hashes</code></p>
+<h3 id='message-parameters-10'>Message Parameters</h3>
+<table><thead>
+<tr>
+<th>Params</th>
+<th>Data_Type</th>
+<th>Values</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>User account id</td>
+</tr>
+</tbody></table>
 <h1 id='private-api'>Private API</h1>
 <p>Required headers for private API:</p>
 
@@ -1125,19 +1226,109 @@ You must add <code>api_key</code> and <code>api_secret</code> in your private AP
 <td>Hex from zkos wasm</td>
 </tr>
 </tbody></table>
-<h2 id='submit-bulk-order'>Submit Bulk Order</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="nx">TODO</span><span class="p">;</span>
+<h2 id='settle-lend-order'>Settle Lend Order</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">relayer-api-key</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">1f9500c6-6371-41a4-bdef-5fb7f7709186</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span>
+  <span class="dl">"</span><span class="s2">signature</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">1de1368e257e5399097af20d182d8462e25a9898bbdb1e8d2ec89eabc3977332</span><span class="dl">"</span>
+<span class="p">);</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">datetime</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">1706613208905</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Content-Type</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">application/json</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">raw</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+  <span class="na">jsonrpc</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2.0</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">settle_lend_order</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">id</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
+  <span class="na">params</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">data</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0a000000000000006163636f756e745f69640000000001000000000000000000344000000000006af84000000000006af84004000000000000000017e140000000000017e140000000000000000060a86ee9d8da7e431b707fb1e344eea721fab8fe2b1ba9461a23182bf9b6d51e005a0cfa6cb6d5149e4d1602863014a1411fdda83ee83c6ef8b9e9934a4211ad4c62cb8729fda0d937220b11650d2eb063b7dfc5e26ee867597a2d69f52749b3118a000000000000003063376363666332356563306335333561383233326537383564646563333939373264633438653235616535373065333638623933383464633631343765633633396234656137313138623030303238393463396432643962666361663732643437613061343938393335313861346366623330613065383162613334613531363834653266303565390001000000010000002a000000000000003138663265626461313733666663366164326533623464336133383634613936616538613666376533308a000000000000003063376363666332356563306335333561383233326537383564646563333939373264633438653235616535373065333638623933383464633631343765633633396234656137313138623030303238393463396432643962666361663732643437613061343938393335313861346366623330613065383162613334613531363834653266303565390100000000000000a0860100000000000000000000000000b899875f246706825d9a849a195da763b3718fc2bdf44cc4eccbb447fe484d010104000000000000000300000001000000003c534c1000000000000000000000000000000000000000000000000000000002000000010000000000000014000000000000000000000000000000b899875f246706825d9a849a195da763b3718fc2bdf44cc4eccbb447fe484d010300000001000000b888000000000000000000000000000000000000000000000000000000000000030000000100000001000000000000000000000000000000000000000000000000000000000000000000000040000000000000004ea572adc412934d369e32e695dbc3eb00d2179cc725365a22e222a6d8f1b254cfb35aa583cd29e1d60d80fc632b557c8388ddd80d9c65d1e0f7547914608a05010000000100000000000000708bceb6fb2e6b61320047c873243ec510e3da990436e6e51884a226ba8fe30a010000000000000075bc2d792cbe4f8852a58874a3f58301f82c1dd82916076e7da1f805dd88cb070000000000000000c6d6a65205e48547a1baa04fa2a0cbd918957b952ee56eb19eb88cd6a5c47106</span><span class="dl">"</span><span class="p">,</span>
+  <span class="p">},</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">POST</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">myHeaders</span><span class="p">,</span>
+  <span class="na">body</span><span class="p">:</span> <span class="nx">raw</span><span class="p">,</span>
+  <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://twilight.rest/api/private</span><span class="dl">"</span><span class="p">,</span> <span class="nx">requestOptions</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">));</span>
 </code></pre></div>
 <blockquote>
 <p>The result from the above endpoint looks like this:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="err">TODO</span><span class="w">
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>Submit Bulk Order</p>
+<p>Settle Lend Order</p>
 <h3 id='http-method-3'>HTTP Method</h3>
 <p><code>POST</code></p>
 <h3 id='rpc-method-3'>RPC Method</h3>
-<p><code>submit_bulk_order</code></p>
+<p><code>settle_lend_order</code></p>
 <h3 id='message-parameters-3'>Message Parameters</h3>
+<table><thead>
+<tr>
+<th>Params</th>
+<th>Data_Type</th>
+<th>Values</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>data</td>
+<td>string</td>
+<td>Hex from zkos wasm</td>
+</tr>
+</tbody></table>
+<h2 id='settle-trade-order'>Settle Trade Order</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">relayer-api-key</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">1f9500c6-6371-41a4-bdef-5fb7f7709186</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span>
+  <span class="dl">"</span><span class="s2">signature</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">1de1368e257e5399097af20d182d8462e25a9898bbdb1e8d2ec89eabc3977332</span><span class="dl">"</span>
+<span class="p">);</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">datetime</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">1706613208905</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Content-Type</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">application/json</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">raw</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+  <span class="na">jsonrpc</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2.0</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">settle_trade_order</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">id</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
+  <span class="na">params</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">data</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0a000000000000006163636f756e745f69640000000001000000000000000000344000000000006af84000000000006af84004000000000000000017e140000000000017e140000000000000000060a86ee9d8da7e431b707fb1e344eea721fab8fe2b1ba9461a23182bf9b6d51e005a0cfa6cb6d5149e4d1602863014a1411fdda83ee83c6ef8b9e9934a4211ad4c62cb8729fda0d937220b11650d2eb063b7dfc5e26ee867597a2d69f52749b3118a000000000000003063376363666332356563306335333561383233326537383564646563333939373264633438653235616535373065333638623933383464633631343765633633396234656137313138623030303238393463396432643962666361663732643437613061343938393335313861346366623330613065383162613334613531363834653266303565390001000000010000002a000000000000003138663265626461313733666663366164326533623464336133383634613936616538613666376533308a000000000000003063376363666332356563306335333561383233326537383564646563333939373264633438653235616535373065333638623933383464633631343765633633396234656137313138623030303238393463396432643962666361663732643437613061343938393335313861346366623330613065383162613334613531363834653266303565390100000000000000a0860100000000000000000000000000b899875f246706825d9a849a195da763b3718fc2bdf44cc4eccbb447fe484d010104000000000000000300000001000000003c534c1000000000000000000000000000000000000000000000000000000002000000010000000000000014000000000000000000000000000000b899875f246706825d9a849a195da763b3718fc2bdf44cc4eccbb447fe484d010300000001000000b888000000000000000000000000000000000000000000000000000000000000030000000100000001000000000000000000000000000000000000000000000000000000000000000000000040000000000000004ea572adc412934d369e32e695dbc3eb00d2179cc725365a22e222a6d8f1b254cfb35aa583cd29e1d60d80fc632b557c8388ddd80d9c65d1e0f7547914608a05010000000100000000000000708bceb6fb2e6b61320047c873243ec510e3da990436e6e51884a226ba8fe30a010000000000000075bc2d792cbe4f8852a58874a3f58301f82c1dd82916076e7da1f805dd88cb070000000000000000c6d6a65205e48547a1baa04fa2a0cbd918957b952ee56eb19eb88cd6a5c47106</span><span class="dl">"</span><span class="p">,</span>
+  <span class="p">},</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">requestOptions</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">POST</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">myHeaders</span><span class="p">,</span>
+  <span class="na">body</span><span class="p">:</span> <span class="nx">raw</span><span class="p">,</span>
+  <span class="na">redirect</span><span class="p">:</span> <span class="dl">"</span><span class="s2">follow</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://twilight.rest/api/private</span><span class="dl">"</span><span class="p">,</span> <span class="nx">requestOptions</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">));</span>
+</code></pre></div>
+<blockquote>
+<p>The result from the above endpoint looks like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>Settle Trade Order</p>
+<h3 id='http-method-4'>HTTP Method</h3>
+<p><code>POST</code></p>
+<h3 id='rpc-method-4'>RPC Method</h3>
+<p><code>settle_trade_order</code></p>
+<h3 id='message-parameters-4'>Message Parameters</h3>
 <table><thead>
 <tr>
 <th>Params</th>
@@ -1238,11 +1429,11 @@ You must add <code>api_key</code> and <code>api_secret</code> in your private AP
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>Open Order</p>
-<h3 id='http-method-4'>HTTP Method</h3>
+<h3 id='http-method-5'>HTTP Method</h3>
 <p><code>POST</code></p>
-<h3 id='rpc-method-4'>RPC Method</h3>
+<h3 id='rpc-method-5'>RPC Method</h3>
 <p><code>open_orders</code></p>
-<h3 id='message-parameters-4'>Message Parameters</h3>
+<h3 id='message-parameters-5'>Message Parameters</h3>
 <p><code>null</code></p>
 <h2 id='order-history-by-id'>Order History By Id</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span>
@@ -1309,11 +1500,11 @@ You must add <code>api_key</code> and <code>api_secret</code> in your private AP
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>Order History By Id</p>
-<h3 id='http-method-5'>HTTP Method</h3>
+<h3 id='http-method-6'>HTTP Method</h3>
 <p><code>POST</code></p>
-<h3 id='rpc-method-5'>RPC Method</h3>
+<h3 id='rpc-method-6'>RPC Method</h3>
 <p><code>order_history</code></p>
-<h3 id='message-parameters-5'>Message Parameters</h3>
+<h3 id='message-parameters-6'>Message Parameters</h3>
 <table><thead>
 <tr>
 <th>Params</th>
@@ -1421,11 +1612,11 @@ You must add <code>api_key</code> and <code>api_secret</code> in your private AP
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>Order History By ClientId</p>
-<h3 id='http-method-6'>HTTP Method</h3>
+<h3 id='http-method-7'>HTTP Method</h3>
 <p><code>POST</code></p>
-<h3 id='rpc-method-6'>RPC Method</h3>
+<h3 id='rpc-method-7'>RPC Method</h3>
 <p><code>order_history</code></p>
-<h3 id='message-parameters-6'>Message Parameters</h3>
+<h3 id='message-parameters-7'>Message Parameters</h3>
 <table><thead>
 <tr>
 <th>Params</th>
@@ -1480,11 +1671,11 @@ You must add <code>api_key</code> and <code>api_secret</code> in your private AP
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>Trade volume</p>
-<h3 id='http-method-7'>HTTP Method</h3>
+<h3 id='http-method-8'>HTTP Method</h3>
 <p><code>POST</code></p>
-<h3 id='rpc-method-7'>RPC Method</h3>
+<h3 id='rpc-method-8'>RPC Method</h3>
 <p><code>trade_volume</code></p>
-<h3 id='message-parameters-7'>Message Parameters</h3>
+<h3 id='message-parameters-8'>Message Parameters</h3>
 <table><thead>
 <tr>
 <th>Params</th>
@@ -1511,11 +1702,11 @@ You must add <code>api_key</code> and <code>api_secret</code> in your private AP
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="err">TODO</span><span class="w">
 </span></code></pre></div>
 <p>Get Funding Payment</p>
-<h3 id='http-method-8'>HTTP Method</h3>
+<h3 id='http-method-9'>HTTP Method</h3>
 <p><code>POST</code></p>
-<h3 id='rpc-method-8'>RPC Method</h3>
+<h3 id='rpc-method-9'>RPC Method</h3>
 <p><code>get_funding_payment</code></p>
-<h3 id='message-parameters-8'>Message Parameters</h3>
+<h3 id='message-parameters-9'>Message Parameters</h3>
 <p><code>null</code></p>
 <h2 id='last-order-details'>Last Order Details</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">relayer-api-key</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">1f9500c6-6371-41a4-bdef-5fb7f7709186</span><span class="dl">"</span><span class="p">);</span>
@@ -1578,11 +1769,11 @@ You must add <code>api_key</code> and <code>api_secret</code> in your private AP
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>Last Order Details</p>
-<h3 id='http-method-9'>HTTP Method</h3>
+<h3 id='http-method-10'>HTTP Method</h3>
 <p><code>POST</code></p>
-<h3 id='rpc-method-9'>RPC Method</h3>
+<h3 id='rpc-method-10'>RPC Method</h3>
 <p><code>last_order_detail</code></p>
-<h3 id='message-parameters-9'>Message Parameters</h3>
+<h3 id='message-parameters-10'>Message Parameters</h3>
 <p><code>null</code></p>
 <h2 id='lend-pool-info'>Lend Pool Info</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">relayer-api-key</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">1f9500c6-6371-41a4-bdef-5fb7f7709186</span><span class="dl">"</span><span class="p">);</span>
@@ -1631,11 +1822,11 @@ You must add <code>api_key</code> and <code>api_secret</code> in your private AP
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>Lend Pool Info</p>
-<h3 id='http-method-10'>HTTP Method</h3>
+<h3 id='http-method-11'>HTTP Method</h3>
 <p><code>POST</code></p>
-<h3 id='rpc-method-10'>RPC Method</h3>
+<h3 id='rpc-method-11'>RPC Method</h3>
 <p><code>lend_pool_info</code></p>
-<h3 id='message-parameters-10'>Message Parameters</h3>
+<h3 id='message-parameters-11'>Message Parameters</h3>
 <p><code>null</code></p>
 <h2 id='trade-order-info'>Trade Order Info</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
 <span class="nx">myHeaders</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">Content-Type</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">application/json</span><span class="dl">"</span><span class="p">);</span>
@@ -1700,11 +1891,11 @@ You must add <code>api_key</code> and <code>api_secret</code> in your private AP
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>Trade Order Info</p>
-<h3 id='http-method-11'>HTTP Method</h3>
+<h3 id='http-method-12'>HTTP Method</h3>
 <p><code>POST</code></p>
-<h3 id='rpc-method-11'>RPC Method</h3>
+<h3 id='rpc-method-12'>RPC Method</h3>
 <p><code>trader_order_info</code></p>
-<h3 id='message-parameters-11'>Message Parameters</h3>
+<h3 id='message-parameters-12'>Message Parameters</h3>
 <table><thead>
 <tr>
 <th>Params</th>
@@ -1761,11 +1952,11 @@ You must add <code>api_key</code> and <code>api_secret</code> in your private AP
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>Lend Order Info</p>
-<h3 id='http-method-12'>HTTP Method</h3>
+<h3 id='http-method-13'>HTTP Method</h3>
 <p><code>POST</code></p>
-<h3 id='rpc-method-12'>RPC Method</h3>
+<h3 id='rpc-method-13'>RPC Method</h3>
 <p><code>lend_order_info</code></p>
-<h3 id='message-parameters-12'>Message Parameters</h3>
+<h3 id='message-parameters-13'>Message Parameters</h3>
 <table><thead>
 <tr>
 <th>Params</th>
@@ -1822,11 +2013,11 @@ You must add <code>api_key</code> and <code>api_secret</code> in your private AP
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>Unrealized Pnl Pubkey</p>
-<h3 id='http-method-13'>HTTP Method</h3>
+<h3 id='http-method-14'>HTTP Method</h3>
 <p><code>POST</code></p>
-<h3 id='rpc-method-13'>RPC Method</h3>
+<h3 id='rpc-method-14'>RPC Method</h3>
 <p><code>unrealized_pnl</code></p>
-<h3 id='message-parameters-13'>Message Parameters</h3>
+<h3 id='message-parameters-14'>Message Parameters</h3>
 <table><thead>
 <tr>
 <th>Params</th>
@@ -1883,11 +2074,11 @@ You must add <code>api_key</code> and <code>api_secret</code> in your private AP
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>Unrealized Pnl OrderId</p>
-<h3 id='http-method-14'>HTTP Method</h3>
+<h3 id='http-method-15'>HTTP Method</h3>
 <p><code>POST</code></p>
-<h3 id='rpc-method-14'>RPC Method</h3>
+<h3 id='rpc-method-15'>RPC Method</h3>
 <p><code>unrealized_pnl</code></p>
-<h3 id='message-parameters-14'>Message Parameters</h3>
+<h3 id='message-parameters-15'>Message Parameters</h3>
 <table><thead>
 <tr>
 <th>Params</th>
@@ -1947,12 +2138,213 @@ You must add <code>api_key</code> and <code>api_secret</code> in your private AP
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>Unrealized Pnl All</p>
-<h3 id='http-method-15'>HTTP Method</h3>
+<h3 id='http-method-16'>HTTP Method</h3>
 <p><code>POST</code></p>
-<h3 id='rpc-method-15'>RPC Method</h3>
+<h3 id='rpc-method-16'>RPC Method</h3>
 <p><code>unrealized_pnl</code></p>
-<h3 id='message-parameters-15'>Message Parameters</h3>
+<h3 id='message-parameters-16'>Message Parameters</h3>
 <p><code>All</code></p>
+<h1 id='websocket-api'>Websocket API</h1><h2 id='subscribe-live-price-data'>Subscribe Live Price Data</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">(</span><span class="dl">"</span><span class="s2">wss://twilight.rest/ws</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">subscriptionPayload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">jsonrpc</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2.0</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">subscribe_live_price_data</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">id</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
+  <span class="na">params</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">socket</span><span class="p">.</span><span class="nx">onopen</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">socket</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">subscriptionPayload</span><span class="p">));</span>
+<span class="p">};</span>
+
+<span class="nx">socket</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Received live price update:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div>
+<blockquote>
+<p>The result from the above endpoint looks like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="mi">1634715868348666</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='endpoint-url'>Endpoint URL</h3>
+<p><code>wss://twilight.rest/ws</code></p>
+<h3 id='description'>Description</h3>
+<p>Subscribe Live Price Data</p>
+<h3 id='parameters'>Parameters</h3>
+<ul>
+<li><strong><code>jsonrpc</code></strong> (String, required): The JSON-RPC protocol version. Must be set to <code>&quot;2.0&quot;</code>.</li>
+<li><strong><code>method</code></strong> (String, required): The name of the method to be invoked.</li>
+<li><strong><code>id</code></strong> (Number, required): A unique identifier for the request.</li>
+<li><strong><code>params</code></strong> (Object, optional): Additional parameters for the method, if any.</li>
+</ul>
+<h3 id='method'>Method</h3>
+<p><code>subscribe_live_price_data</code></p>
+<h2 id='subscribe-order-book'>Subscribe Order Book</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">(</span><span class="dl">"</span><span class="s2">wss://twilight.rest/ws</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">subscriptionPayload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">jsonrpc</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2.0</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">subscribe_order_book</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">id</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
+  <span class="na">params</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">socket</span><span class="p">.</span><span class="nx">onopen</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">socket</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">subscriptionPayload</span><span class="p">));</span>
+<span class="p">};</span>
+
+<span class="nx">socket</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Received live order book update:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div>
+<blockquote>
+<p>The result from the above endpoint looks like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="mi">7768140282752642</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='endpoint-url-2'>Endpoint URL</h3>
+<p><code>wss://twilight.rest/ws</code></p>
+<h3 id='description-2'>Description</h3>
+<p>Subscribe Order Book</p>
+<h3 id='parameters-2'>Parameters</h3>
+<ul>
+<li><strong><code>jsonrpc</code></strong> (String, required): The JSON-RPC protocol version. Must be set to <code>&quot;2.0&quot;</code>.</li>
+<li><strong><code>method</code></strong> (String, required): The name of the method to be invoked.</li>
+<li><strong><code>id</code></strong> (Number, required): A unique identifier for the request.</li>
+<li><strong><code>params</code></strong> (Object, optional): Additional parameters for the method, if any.</li>
+</ul>
+<h3 id='method-2'>Method</h3>
+<p><code>subscribe_order_book</code></p>
+<h2 id='subscribe-candle-data'>Subscribe Candle Data</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">(</span><span class="dl">"</span><span class="s2">wss://twilight.rest/ws</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">subscriptionPayload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">jsonrpc</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2.0</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">subscribe_candle_data</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">id</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
+  <span class="na">params</span><span class="p">:</span> <span class="p">{</span> <span class="na">interval</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ONE_HOUR</span><span class="dl">"</span> <span class="p">},</span>
+<span class="p">};</span>
+
+<span class="nx">socket</span><span class="p">.</span><span class="nx">onopen</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">socket</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">subscriptionPayload</span><span class="p">));</span>
+<span class="p">};</span>
+
+<span class="nx">socket</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Received live candle data update:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div>
+<blockquote>
+<p>The result from the above endpoint looks like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"s_candle_data"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"subscription"</span><span class="p">:</span><span class="w"> </span><span class="mi">1177191929099717</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='endpoint-url-3'>Endpoint URL</h3>
+<p><code>wss://twilight.rest/ws</code></p>
+<h3 id='description-3'>Description</h3>
+<p>Subscribe Candle Data</p>
+<h3 id='parameters-3'>Parameters</h3>
+<ul>
+<li><strong><code>jsonrpc</code></strong> (String, required): The JSON-RPC protocol version. Must be set to <code>&quot;2.0&quot;</code>.</li>
+<li><strong><code>method</code></strong> (String, required): The name of the method to be invoked.</li>
+<li><strong><code>id</code></strong> (Number, required): A unique identifier for the request.</li>
+<li><strong><code>params</code></strong> (Object, optional): Additional parameters for the method, if any.</li>
+</ul>
+<h3 id='method-3'>Method</h3>
+<p><code>subscribe_candle_data</code></p>
+<h2 id='subscribe-recent-trades'>Subscribe Recent Trades</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">(</span><span class="dl">"</span><span class="s2">wss://twilight.rest/ws</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">subscriptionPayload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">jsonrpc</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2.0</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">subscribe_recent_trades</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">id</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
+  <span class="na">params</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">socket</span><span class="p">.</span><span class="nx">onopen</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">socket</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">subscriptionPayload</span><span class="p">));</span>
+<span class="p">};</span>
+
+<span class="nx">socket</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Received live recent trades update:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div>
+<blockquote>
+<p>The result from the above endpoint looks like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="mi">2931691776204415</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='endpoint-url-4'>Endpoint URL</h3>
+<p><code>wss://twilight.rest/ws</code></p>
+<h3 id='description-4'>Description</h3>
+<p>Subscribe Recent Trades</p>
+<h3 id='parameters-4'>Parameters</h3>
+<ul>
+<li><strong><code>jsonrpc</code></strong> (String, required): The JSON-RPC protocol version. Must be set to <code>&quot;2.0&quot;</code>.</li>
+<li><strong><code>method</code></strong> (String, required): The name of the method to be invoked.</li>
+<li><strong><code>id</code></strong> (Number, required): A unique identifier for the request.</li>
+<li><strong><code>params</code></strong> (Object, optional): Additional parameters for the method, if any.</li>
+</ul>
+<h3 id='method-4'>Method</h3>
+<p><code>subscribe_recent_trades</code></p>
+<h2 id='subscribe-heartbeat'>Subscribe Heartbeat</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">(</span><span class="dl">"</span><span class="s2">wss://twilight.rest/ws</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">subscriptionPayload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">jsonrpc</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2.0</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">subscribe_heartbeat</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">id</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
+  <span class="na">params</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">socket</span><span class="p">.</span><span class="nx">onopen</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">socket</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">subscriptionPayload</span><span class="p">));</span>
+<span class="p">};</span>
+
+<span class="nx">socket</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Received live recent trades update:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div>
+<blockquote>
+<p>The result from the above endpoint looks like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"s_heartbeat"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"subscription"</span><span class="p">:</span><span class="w"> </span><span class="mi">8669657463617608</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BEAT"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='endpoint-url-5'>Endpoint URL</h3>
+<p><code>wss://twilight.rest/ws</code></p>
+<h3 id='description-5'>Description</h3>
+<p>Subscribe Heartbeat</p>
+<h3 id='parameters-5'>Parameters</h3>
+<ul>
+<li><strong><code>jsonrpc</code></strong> (String, required): The JSON-RPC protocol version. Must be set to <code>&quot;2.0&quot;</code>.</li>
+<li><strong><code>method</code></strong> (String, required): The name of the method to be invoked.</li>
+<li><strong><code>id</code></strong> (Number, required): A unique identifier for the request.</li>
+<li><strong><code>params</code></strong> (Object, optional): Additional parameters for the method, if any.</li>
+</ul>
+<h3 id='method-5'>Method</h3>
+<p><code>subscribe_heartbeat</code></p>
 
       </div>
       <div class="dark-box">
