@@ -14,6 +14,7 @@ toc_footers:
 includes:
   - public
   - private
+  - websocket
 
 search: true
 
