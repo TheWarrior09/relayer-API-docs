@@ -623,3 +623,80 @@ Server time
 ### Message Parameters
 
 `null`
+
+## Transaction Hash
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify({
+  jsonrpc: "2.0",
+  method: "transaction_hashes",
+  id: 123,
+  params: {
+    AccountId: {
+      id: "0c3eb16783ccdbee855e0babf6d130101e7d66089bac20484606e52bf507d90e3a5049a3379b8afc47068d2508dfd71fe92adab7a5ad682fbbbb9b401158e62d42aa64cb22",
+    },
+  },
+});
+
+var requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  body: raw,
+  redirect: "follow",
+};
+
+fetch("https://rpc.twilight.rest/api", requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
+```
+
+> The result from the above endpoint looks like this:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": [
+    {
+      "account_id": "0c3eb16783ccdbee855e0babf6d130101e7d66089bac20484606e52bf507d90e3a5049a3379b8afc47068d2508dfd71fe92adab7a5ad682fbbbb9b401158e62d42aa64cb22",
+      "datetime": "1708363831398559",
+      "id": 4,
+      "order_id": "83216790-d1c6-40d9-a70e-712d5d81cecd",
+      "order_status": "FILLED",
+      "order_type": "MARKET",
+      "output": "01000000010000002a000000000000003138363065656636336564656531303738313738623361646236336539663836393231636161313662358a00000000000000306333656231363738336363646265653835356530626162663664313330313031653764363630383962616332303438343630366535326266353037643930653361353034396133333739623861666334373036386432353038646664373166653932616461623761356164363832666262626239623430313135386536326434326161363463623232010000000000000082000000000000000000000000000000671ca31e9c9274ef4cf068098060878c960afaa5d7c2a205d3cd3f38f858e00f0104000000000000000300000001000000386567000000000000000000000000000000000000000000000000000000000002000000010000000000000001000000000000000000000000000000671ca31e9c9274ef4cf068098060878c960afaa5d7c2a205d3cd3f38f858e00f03000000010000009ccb0000000000000000000000000000000000000000000000000000000000000300000001000000010000000000000000000000000000000000000000000000000000000000000001000000",
+      "tx_hash": "8E291447D61EBC7E0AF5BB006576190E117516CA9A29358554C108718586FF58"
+    },
+    {
+      "account_id": "0c3eb16783ccdbee855e0babf6d130101e7d66089bac20484606e52bf507d90e3a5049a3379b8afc47068d2508dfd71fe92adab7a5ad682fbbbb9b401158e62d42aa64cb22",
+      "datetime": "1708411999147047",
+      "id": 8,
+      "order_id": "83216790-d1c6-40d9-a70e-712d5d81cecd",
+      "order_status": "SETTLED",
+      "order_type": "MARKET",
+      "output": null,
+      "tx_hash": "C5680F08C4D315241924BB1B4F172B12ABB44A6A49DA0CBAD69552D43A9EBA4A"
+    }
+  ],
+  "id": 123
+}
+```
+
+Transaction Hash
+
+### HTTP Method
+
+`POST`
+
+### RPC Method
+
+`transaction_hashes`
+
+### Message Parameters
+
+| Params | Data_Type | Values          |
+| ------ | --------- | --------------- |
+| id     | string    | User account id |
