@@ -6,6 +6,12 @@ Required headers for private API:
 2. datetime
 3. relayer-api-key
 
+**Endpoint URL**
+
+`API_ENDPOINT_PRODUCTION = https://twilight.rest`
+
+`API_ENDPOINT_STAGING = https://rpc.twilight.rest`
+
 ## Submit Lend Order Zkos
 
 ```javascript
@@ -34,7 +40,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api/private", requestOptions)
+fetch("API_ENDPOINT/api/private", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -45,7 +51,7 @@ fetch("https://twilight.rest/api/private", requestOptions)
 ```json
 {
   "jsonrpc": "2.0",
-  "result": "Invalid bincode",
+  "result": "OK",
   "id": 123
 }
 ```
@@ -94,7 +100,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api/private", requestOptions)
+fetch("API_ENDPOINT/api/private", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -154,7 +160,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api/private", requestOptions)
+fetch("API_ENDPOINT/api/private", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -214,7 +220,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api/private", requestOptions)
+fetch("API_ENDPOINT/api/private", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -272,7 +278,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api/private", requestOptions)
+fetch("API_ENDPOINT/api/private", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -379,7 +385,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api/private", requestOptions)
+fetch("API_ENDPOINT/api/private", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -469,7 +475,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api/private", requestOptions)
+fetch("API_ENDPOINT/api/private", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -579,7 +585,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api/private", requestOptions)
+fetch("API_ENDPOINT/api/private", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -615,13 +621,50 @@ Trade volume
 ## Get Funding Payment
 
 ```javascript
-Error;
+const myHeaders = new Headers();
+myHeaders.append("relayer-api-key", "7d4fd427-ab9f-4a4d-8163-7faddb0c50e2");
+myHeaders.append("Content-Type", "application/json");
+myHeaders.append(
+  "signature",
+  "285d6ca0867a6b20a8eb4a018394f290f8ffb2b0a9b36ba6bd992ad536072932"
+);
+myHeaders.append("datetime", "1709098568058");
+
+const raw = JSON.stringify({
+  jsonrpc: "2.0",
+  method: "get_funding_payment",
+  id: 123,
+  params: {
+    id: "a4340b19-cd90-411e-adfc-a3695109d7a2",
+  },
+});
+
+const requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  body: raw,
+  redirect: "follow",
+};
+
+fetch("API_ENDPOINT/api/private", requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.error(error));
 ```
 
 > The result from the above endpoint looks like this:
 
 ```json
-TODO
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "funding_payment": "0",
+    "funding_rate": "-0.123713",
+    "order_id": "a4340b19-cd90-411e-adfc-a3695109d7a2",
+    "price": "57208.00"
+  },
+  "id": 123
+}
 ```
 
 Get Funding Payment
@@ -636,7 +679,9 @@ Get Funding Payment
 
 ### Message Parameters
 
-`null`
+| Params | Data_Type | Values        |
+| ------ | --------- | ------------- |
+| id     | string    | UUID of order |
 
 ## Last Order Details
 
@@ -664,7 +709,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api/private", requestOptions)
+fetch("API_ENDPOINT/api/private", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -743,7 +788,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api/private", requestOptions)
+fetch("API_ENDPOINT/api/private", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -810,7 +855,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api/private", requestOptions)
+fetch("API_ENDPOINT/api/private", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -893,7 +938,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api/private", requestOptions)
+fetch("API_ENDPOINT/api/private", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -904,9 +949,29 @@ fetch("https://twilight.rest/api/private", requestOptions)
 ```json
 {
   "jsonrpc": "2.0",
-  "error": {
-    "code": -32001,
-    "message": "Custom error: Error fetching order info: NotFound"
+  "result": {
+    "account_id": "0c7ccfc25ec0c535a8232e785ddec39972dc48e25ae570e368b9384dc6147ec639b4ea7118b0002894c9d2d9bfcaf72d47a0a49893518a4cfb30a0e81ba34a51684e2f05e9",
+    "available_margin": "10",
+    "bankruptcy_price": "41365.2857142857174039818346500396728515625",
+    "bankruptcy_value": "209.999999999999971578290569595992565155029296875",
+    "entry_nonce": 0,
+    "entry_sequence": 1,
+    "entryprice": "43433.550000000002910383045673370361328125",
+    "execution_price": "35000",
+    "exit_nonce": 0,
+    "id": 1,
+    "initial_margin": "10",
+    "leverage": "20",
+    "liquidation_price": "41523.4703632887176354415714740753173828125",
+    "maintenance_margin": "0.8000000000000000444089209850062616169452667236328125",
+    "order_status": "FILLED",
+    "order_type": "MARKET",
+    "position_type": "LONG",
+    "positionsize": "8686710",
+    "settlement_price": "0",
+    "timestamp": "2024-01-30T11:13:23.386791Z",
+    "unrealized_pnl": "0",
+    "uuid": "49251ba1-30eb-4545-9e4e-1bdf2ec9c3cf"
   },
   "id": 123
 }
@@ -956,7 +1021,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api/private", requestOptions)
+fetch("API_ENDPOINT/api/private", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -1019,7 +1084,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api/private", requestOptions)
+fetch("API_ENDPOINT/api/private", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -1080,7 +1145,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api/private", requestOptions)
+fetch("API_ENDPOINT/api/private", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));

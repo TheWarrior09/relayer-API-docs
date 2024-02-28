@@ -1,5 +1,11 @@
 # Public API
 
+**Endpoint URL**
+
+`API_ENDPOINT_PRODUCTION = https://twilight.rest`
+
+`API_ENDPOINT_STAGING = https://rpc.twilight.rest`
+
 ## Candle Data
 
 ```javascript
@@ -25,7 +31,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api", requestOptions)
+fetch("API_ENDPOINT/api", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -105,7 +111,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api", requestOptions)
+fetch("API_ENDPOINT/api", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -165,7 +171,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api", requestOptions)
+fetch("API_ENDPOINT/api", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -239,7 +245,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api", requestOptions)
+fetch("API_ENDPOINT/api", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -292,7 +298,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api", requestOptions)
+fetch("API_ENDPOINT/api", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -355,7 +361,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api", requestOptions)
+fetch("API_ENDPOINT/api", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -409,7 +415,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api", requestOptions)
+fetch("API_ENDPOINT/api", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -468,7 +474,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api", requestOptions)
+fetch("API_ENDPOINT/api", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -545,7 +551,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/register", requestOptions)
+fetch("API_ENDPOINT/register", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -554,7 +560,10 @@ fetch("https://twilight.rest/register", requestOptions)
 > The result from the above endpoint looks like this:
 
 ```json
-TODO
+{
+  "api_key": "7d4fd427-ab9f-4a4d-8163-7faddb0c50e2",
+  "api_secret": "dab81c56-2cb1-4bfb-b58d-26e14d1262d6"
+}
 ```
 
 Endpoint to get `api_key` and `api_secret` for private API endpoints.
@@ -594,7 +603,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://twilight.rest/api", requestOptions)
+fetch("API_ENDPOINT/api", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
@@ -648,7 +657,7 @@ var requestOptions = {
   redirect: "follow",
 };
 
-fetch("https://rpc.twilight.rest/api", requestOptions)
+fetch("API_ENDPOINT/api", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
