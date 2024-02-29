@@ -1641,7 +1641,36 @@ You must add <code>api_key</code> and <code>api_secret</code> in your private AP
 <tr>
 <td>ClientId</td>
 <td>object</td>
-<td><code>{&quot;from&quot;: datetime, &quot;to&quot;: datetime, &quot;offset&quot;: integer,&quot;limit&quot;: integer}</code></td>
+<td><a href="#clientid">ClientId</a></td>
+</tr>
+</tbody></table>
+<h3 id='clientid'>ClientId</h3>
+<table><thead>
+<tr>
+<th>Params</th>
+<th>Data_Type</th>
+<th>Values</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>from</td>
+<td>datetime</td>
+<td>Start time</td>
+</tr>
+<tr>
+<td>to</td>
+<td>datetime</td>
+<td>End time</td>
+</tr>
+<tr>
+<td>offset</td>
+<td>integer</td>
+<td>Page number</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>integer</td>
+<td>`Number of entries</td>
 </tr>
 </tbody></table>
 <h2 id='trade-volume'>Trade Volume</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
@@ -2067,7 +2096,7 @@ You must add <code>api_key</code> and <code>api_secret</code> in your private AP
   <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">unrealized_pnl</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">id</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
   <span class="na">params</span><span class="p">:</span> <span class="p">{</span>
-    <span class="na">PublicKey</span><span class="p">:</span> <span class="dl">"</span><span class="s2">twilight1l03j8j5nwegy9fkz9p0whkxch2e2zqcq6lvfda</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">id</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0c3eb16783ccdbee855e0babf6d130101e7d66089bac20484606e52bf507d90e3a5049a3379b8afc47068d2508dfd71fe92adab7a5ad682fbbbb9b401158e62d42aa64cb22</span><span class="dl">"</span><span class="p">,</span>
   <span class="p">},</span>
 <span class="p">});</span>
 
@@ -2109,9 +2138,9 @@ You must add <code>api_key</code> and <code>api_secret</code> in your private AP
 </tr>
 </thead><tbody>
 <tr>
-<td>PublicKey</td>
+<td>id</td>
 <td>string</td>
-<td>User twilight public key</td>
+<td>User account id</td>
 </tr>
 </tbody></table>
 <h2 id='unrealized-pnl-orderid'>Unrealized Pnl OrderId</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">myHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">();</span>
