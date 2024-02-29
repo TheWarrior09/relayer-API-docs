@@ -552,9 +552,18 @@ Order History By ClientId
 
 ### Message Parameters
 
-| Params   | Data_Type | Values                                                                   |
-| -------- | --------- | ------------------------------------------------------------------------ |
-| ClientId | object    | `{"from": datetime, "to": datetime, "offset": integer,"limit": integer}` |
+| Params   | Data_Type | Values                           |
+| -------- | --------- | -------------------------------- |
+| ClientId | object    | <a href="#clientid">ClientId</a> |
+
+### ClientId
+
+| Params | Data_Type | Values             |
+| ------ | --------- | ------------------ |
+| from   | datetime  | Start time         |
+| to     | datetime  | End time           |
+| offset | integer   | Page number        |
+| limit  | integer   | `Number of entries |
 
 ## Trade Volume
 
@@ -1010,7 +1019,7 @@ var raw = JSON.stringify({
   method: "unrealized_pnl",
   id: 123,
   params: {
-    PublicKey: "twilight1l03j8j5nwegy9fkz9p0whkxch2e2zqcq6lvfda",
+    id: "0c3eb16783ccdbee855e0babf6d130101e7d66089bac20484606e52bf507d90e3a5049a3379b8afc47068d2508dfd71fe92adab7a5ad682fbbbb9b401158e62d42aa64cb22",
   },
 });
 
@@ -1052,9 +1061,9 @@ Unrealized Pnl Pubkey
 
 ### Message Parameters
 
-| Params    | Data_Type | Values                   |
-| --------- | --------- | ------------------------ |
-| PublicKey | string    | User twilight public key |
+| Params | Data_Type | Values          |
+| ------ | --------- | --------------- |
+| id     | string    | User account id |
 
 ## Unrealized Pnl OrderId
 
